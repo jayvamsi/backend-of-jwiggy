@@ -4,12 +4,6 @@ const multer = require("multer");
 const path = require('path');
 const fs = require('fs');
 
-// Ensure the uploads directory exists
-const uploadDir = path.join(__dirname, '..', 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
-
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -50,12 +44,14 @@ const addFirm = async (req, res) => {
 
     const firmId=savedFirm._id
 
-    // vendor.firm.push(savedFirm);
+    
     const vendorFirmName = savedFirm.firmName
+
+    vendor.firm.push(savedFirm);
 
     await vendor.save();
 
-    return res.status(200).json({ message: "Firm added successfully" ,firmId});
+    return res.status(200).json({ message: "Firm added successfully" ,firmId,vendorFirmName});
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -79,6 +75,6 @@ const deleteFirmById = async (req, res) => {
 };
 
 module.exports = {
-  addFirm: [upload.single("image"), addFirm],
+  addFirm: [upload.single('image'), addFirm],
   deleteFirmById,
 };
