@@ -2,6 +2,7 @@ const Firm = require("../models/Firm");
 const Vendor = require("../models/Vendor");
 const multer = require("multer");
 const path = require('path');
+const fs = require('fs');
 
 // Ensure the uploads directory exists
 const uploadDir = path.join(__dirname, '..', 'uploads');
